@@ -7,7 +7,7 @@ int main() {
 
     int c = -1;
     for(;;) {
-        printf("====\n");
+        if (c) printf("====\n");
         switch (screen_get(&ui)) {
             case game_ui:
                 if (c == ' ') screen_add(&ui, unit_ui);
@@ -16,9 +16,11 @@ int main() {
                     printf("entering game\npress q to quit\n");
                     printf("unit: space\n");
                     printf("back: b\n");
+                    break;
                 }
 
-                break;
+                c = -1;
+                continue;
             
             case main_menu_ui:
                 if (c == ' ') screen_add(&ui, game_ui);
@@ -26,17 +28,22 @@ int main() {
                     printf("the choice is yours\n");
                     printf("start game: space\n");
                     printf("end game: q\n");
+                    break;
                 }
                 
-                break;
+                c = -1;
+                continue;
 
             default:
                 printf("unhandled menu screen %i\n", screen_get(&ui));
                 screen_remove(&ui);
+                c = -1;
                 break;
         }
 
         c = -1;
-        if ((c = getchar()) == 'q') break;
+        while((c = getchar()) == '\n');
+        if (c == 'q') break;
+        //if ((c = getchar()) == 'q') break;
     }
 }
