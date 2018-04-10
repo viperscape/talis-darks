@@ -1,0 +1,9 @@
+out_path = "build"
+bin = "talis-darks"
+link = []
+src_path = "src"
+trigger = "build//compile"
+prepend = ["-std=c99", "-ggdb"]
+
+[deps]
+main = []
