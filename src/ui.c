@@ -1,8 +1,8 @@
 #include "ui.h"
 
-struct game_screen screen_init () {
+struct game_screen screen_init (enum ui_screens menu) {
     enum ui_screens* menus = malloc(sizeof(enum ui_screens) * 1);
-    menus[0] = game_ui;
+    menus[0] = menu;
 
     struct game_screen screen = { menus, 1, 1 };
     return screen;

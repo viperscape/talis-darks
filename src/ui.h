@@ -10,7 +10,7 @@ struct game_screen {
     int screen_cap;
 };
 
-extern struct game_screen screen_init ();
+extern struct game_screen screen_init (enum ui_screens menu);
 extern void screen_free (struct game_screen *screen);
 extern void screen_add (struct game_screen *screen, enum ui_screens ui);
 extern enum ui_screens screen_get (struct game_screen *screen);
