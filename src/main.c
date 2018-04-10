@@ -31,6 +31,7 @@ int main() {
 
             default:
                 printf("unhandled menu screen %i\n", screen_get(&ui));
+                screen_remove(&ui);
                 break;
         }
 
