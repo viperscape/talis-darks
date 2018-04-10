@@ -4,6 +4,7 @@ link = []
 src_path = "src"
 trigger = "build//compile"
 prepend = ["-std=c99", "-ggdb"]
+entry = "main"
 
 [deps]
 main = []
