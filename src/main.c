@@ -7,6 +7,7 @@ int main() {
 
     int c = -1;
     for(;;) {
+        printf("====\n");
         switch (screen_get(&ui)) {
             case game_ui:
                 if (c == ' ') screen_add(&ui, unit_ui);
