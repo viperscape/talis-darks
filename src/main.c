@@ -43,7 +43,7 @@ void game_free() {
 }
 
 SDL_Renderer* game_init () {
-    SDL_Renderer* renderer = gfx_init(win_w,win_h);
+    SDL_Renderer* renderer = gfx_init("Talis Darks", 200, 200, win_w,win_h);
     font = font_init(renderer, "assets/fonts/constantia");
 
     return renderer;
