@@ -1,6 +1,6 @@
 out_path = "build"
 bin = "talis-darks"
-link = []
+link = ["SDL2main", "SDL2"]
 src_path = "src"
 trigger = "build//compile"
 prepend = ["-std=c99", "-ggdb"]
@@ -10,3 +10,6 @@ entry = "main"
 main = []
 ui = ["main"]
 player = ["main"]
+font = ["main"]
+gfx = ["main"]
+sprite = ["main"]
