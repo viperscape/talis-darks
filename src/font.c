@@ -81,51 +81,12 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     return(font);
 }
 
-void font_render (SDL_Renderer* renderer, struct font *font, int x, int y, char *str) {
-    int cx = x;
-    int cy = y; //cursors
-    char ch;
-    
-    SDL_Rect src;
-    SDL_Rect dest;
-
-    for(int i = 0; i<strlen(str); ++i) {
-        ch = str[i];
-        if (ch == ' ') {
-            cx += font->chs['j'].xadv; // note: we use static 'j' element
-            continue;
-        }
-        else if (ch == '\t') {
-            cx += font->chs['j'].xadv * 4; // static 4 space tab size
-            continue;
-        }
-        else if (ch == '\n') {
-            cx = x;
-            cy += font->chs['j'].h + 2;
-            continue;
-        }
-        
-        src.x = font->chs[ch].x;
-        src.y = font->chs[ch].y;
-        src.w = font->chs[ch].w;
-        src.h = font->chs[ch].h;
-
-        dest.x = cx + font->chs[ch].xoff;
-        dest.y = cy + font->chs[ch].yoff;
-        dest.w = font->chs[ch].w;
-        dest.h = font->chs[ch].h;
-        cx += font->chs[ch].xadv;
-
-        SDL_RenderCopy(renderer, font->tex, &src, &dest);
-    }
-}
-
 struct cache font_cache (struct font *font, int x, int y, char *str) {
     int cx = x;
     int cy = y; //cursors
     char ch;
 
-    struct cache cache = { 0, NULL, NULL, font->tex };
+    struct cache cache = { 0, { x, y, 0,0 }, NULL, NULL, font->tex };
     
     for(int i = 0; i<strlen(str); ++i) {
         ch = str[i];
@@ -142,6 +103,9 @@ struct cache font_cache (struct font *font, int x, int y, char *str) {
             cy += font->chs['j'].h + 2;
             continue;
         }
+
+        if (cx - x > cache.bounds.w) cache.bounds.w = cx + font->chs['j'].xadv - x;
+        cache.bounds.h = (cy - y) + font->chs['j'].h + 2;
         
         SDL_Rect *src = realloc(cache.src, sizeof(SDL_Rect) * (cache.len + 1));
         SDL_Rect *dest = realloc(cache.dest, sizeof(SDL_Rect) * (cache.len + 1));
@@ -171,6 +135,15 @@ struct cache font_cache (struct font *font, int x, int y, char *str) {
 }
 
 void cache_render (SDL_Renderer* renderer, struct cache *cache) {
+    /* render area for debug
+    SDL_Surface *s = SDL_CreateRGBSurface(0, cache->bounds.w, cache->bounds.h, 32, 0, 0, 0, 0);
+    SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 255, 0, 0));
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, s);
+    SDL_FreeSurface(s);
+    SDL_RenderCopy(renderer, tex, NULL, &cache->bounds);
+    SDL_DestroyTexture(tex);
+    */
+
     for (int i = 0; i < cache->len; ++i)
         SDL_RenderCopy(renderer, cache->tex, &cache->src[i], &cache->dest[i]);
 }
@@ -188,4 +161,14 @@ void font_free (struct font *font) {
     if (font->tex == NULL) return;
     SDL_DestroyTexture(font->tex);
     font->tex = NULL;
+}
+
+int cache_click(struct cache *cache, int x, int y) {
+    if ((x > cache->bounds.x) &&  (x < cache->bounds.x + cache->bounds.w)) {
+        if ((y > cache->bounds.y) &&  (y < cache->bounds.y + cache->bounds.h)) {
+            return 1;
+        }
+    }
+
+    return 0;
 }
