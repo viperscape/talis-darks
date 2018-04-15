@@ -104,7 +104,7 @@ struct text font_build (struct font *font, int x, int y, char *str) {
             continue;
         }
 
-        if (cx - x > text.bounds.w) text.bounds.w = cx + font->chs['j'].xadv - x;
+        if (cx - x > text.bounds.w) text.bounds.w = (cx + font->chs['j'].w + font->chs['j'].xadv + 2) - x;
         text.bounds.h = (cy - y) + font->chs['j'].h + 2;
         
         SDL_Rect *src = realloc(text.src, sizeof(SDL_Rect) * (text.len + 1));
@@ -135,7 +135,8 @@ struct text font_build (struct font *font, int x, int y, char *str) {
 }
 
 void text_render (SDL_Renderer* renderer, struct text *text) {
-    /* render area for debug
+    // render area for debug
+    /*
     SDL_Surface *s = SDL_CreateRGBSurface(0, text->bounds.w, text->bounds.h, 32, 0, 0, 0, 0);
     SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 255, 0, 0));
     SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, s);
