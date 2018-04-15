@@ -34,6 +34,6 @@ extern void sprite_free(struct sprite *s);
 extern int sprites_add(struct sprites *g, struct sprite *s);
 extern void sprites_free(struct sprites *g);
 
-extern int sprite_click(struct sprite *s, int x, int y);
+extern int sprite_click(SDL_Event *event, struct sprite *s);
 
 #endif

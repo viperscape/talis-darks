@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "../SDL/SDL.h"
+#include "support.h"
+
 #include "ui.h"
 #include "font.h"
 #include "gfx.h"
@@ -27,10 +29,8 @@ int handle_input () {
         }
 
         if (screen_get(&menus) == game_ui) {
-            if (event.type == SDL_MOUSEBUTTONDOWN) {
-                int rc = text_click(&stat_text, event.button.x, event.button.y);
-                printf("clicked text: %i\n", rc);
-            }
+            int rc = clicked(&event, &stat_text.bounds);
+            if (rc) printf("clicked text: %i\n", rc);
         }
     }
 

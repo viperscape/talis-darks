@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "support.h"
+
 struct sprite sprite_init() {
     struct sprite s = { 0,0,0, heading_E, 0, {0,0,0,0} , {NULL} };
     return s;
@@ -105,12 +107,6 @@ int sprites_add(struct sprites *g, struct sprite *s) {
     return g->num-1;
 }
 
-int sprite_click(struct sprite *s, int x, int y) {
-    if ((x > s->rect.x) &&  (x < s->rect.x + s->rect.w)) {
-        if ((y > s->rect.y) &&  (y < s->rect.y + s->rect.h)) {
-            return 1;
-        }
-    }
-
-    return 0;
+int sprite_click(SDL_Event *event, struct sprite *s) {
+    return clicked(event, &s->rect);
 }
