@@ -10,7 +10,8 @@ int win_h = 768;
 SDL_Renderer* render_ctx = NULL;
 struct font font, font24;
 struct game_screen menus;
-struct cache stat_cache;
+struct text stat_text;
+struct text title_text;
 
 struct player player = { 10, 95, 8, 75, 63, 55, 4, 30, 21, 50, 98 };
 
@@ -27,7 +28,7 @@ int handle_input () {
 
         if (screen_get(&menus) == game_ui) {
             if (event.type == SDL_MOUSEBUTTONDOWN) {
-                int rc = cache_click(&stat_cache, event.button.x, event.button.y);
+                int rc = text_click(&stat_text, event.button.x, event.button.y);
                 printf("clicked text: %i\n", rc);
             }
         }
@@ -40,12 +41,10 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
     if (handle_input() == 1) return 1;
 
     if (screen_get(&menus) == main_menu_ui) {
-        struct cache cache = font_cache(&font, 50, 50, "Talis Darks");
-        cache_render(renderer, &cache);
-        cache_free(&cache);
+        text_render(renderer, &title_text);
     }
     else if (screen_get(&menus) == game_ui) {
-        cache_render(renderer, &stat_cache);
+        text_render(renderer, &stat_text);
     }
 
     return 0;
@@ -53,7 +52,8 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
 
 void game_free() {
     gfx_free();
-    cache_free(&stat_cache);
+    text_free(&stat_text);
+    text_free(&title_text);
     font_free(&font);
 }
 
@@ -62,10 +62,12 @@ SDL_Renderer* game_init () {
     font = font_init(renderer, "assets/fonts/constantia");
     font24 = font_init(renderer, "assets/fonts/constantia-24");
 
+    title_text = font_build(&font, 50, 50, "Talis Darks");
+
     char stats[256] = {'\0'};
     sprintf(stats, "player %s\nstr: %i\nagility: %i\nintellect %i\ncharisma %i", 
         "Galendra", player.strength, player.agility, player.intellect, player.charisma);
-    stat_cache = font_cache(&font24, 50, 50, stats);
+    stat_text = font_build(&font24, 50, 50, stats);
 
     return renderer;
 }

@@ -81,12 +81,12 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     return(font);
 }
 
-struct cache font_cache (struct font *font, int x, int y, char *str) {
+struct text font_build (struct font *font, int x, int y, char *str) {
     int cx = x;
     int cy = y; //cursors
     char ch;
 
-    struct cache cache = { 0, { x, y, 0,0 }, NULL, NULL, font->tex };
+    struct text text = { 0, { x, y, 0,0 }, NULL, NULL, font->tex };
     
     for(int i = 0; i<strlen(str); ++i) {
         ch = str[i];
@@ -104,57 +104,57 @@ struct cache font_cache (struct font *font, int x, int y, char *str) {
             continue;
         }
 
-        if (cx - x > cache.bounds.w) cache.bounds.w = cx + font->chs['j'].xadv - x;
-        cache.bounds.h = (cy - y) + font->chs['j'].h + 2;
+        if (cx - x > text.bounds.w) text.bounds.w = cx + font->chs['j'].xadv - x;
+        text.bounds.h = (cy - y) + font->chs['j'].h + 2;
         
-        SDL_Rect *src = realloc(cache.src, sizeof(SDL_Rect) * (cache.len + 1));
-        SDL_Rect *dest = realloc(cache.dest, sizeof(SDL_Rect) * (cache.len + 1));
+        SDL_Rect *src = realloc(text.src, sizeof(SDL_Rect) * (text.len + 1));
+        SDL_Rect *dest = realloc(text.dest, sizeof(SDL_Rect) * (text.len + 1));
         if ((src == NULL)||(dest == NULL)) {
             fprintf(stderr, "exceeded dynamic mem\n");
             exit(1);
         }
 
-        cache.src = src;
-        cache.dest = dest;
+        text.src = src;
+        text.dest = dest;
 
-        cache.src[cache.len].x = font->chs[ch].x;
-        cache.src[cache.len].y = font->chs[ch].y;
-        cache.src[cache.len].w = font->chs[ch].w;
-        cache.src[cache.len].h = font->chs[ch].h;
+        text.src[text.len].x = font->chs[ch].x;
+        text.src[text.len].y = font->chs[ch].y;
+        text.src[text.len].w = font->chs[ch].w;
+        text.src[text.len].h = font->chs[ch].h;
 
-        cache.dest[cache.len].x = cx + font->chs[ch].xoff;
-        cache.dest[cache.len].y = cy + font->chs[ch].yoff;
-        cache.dest[cache.len].w = font->chs[ch].w;
-        cache.dest[cache.len].h = font->chs[ch].h;
+        text.dest[text.len].x = cx + font->chs[ch].xoff;
+        text.dest[text.len].y = cy + font->chs[ch].yoff;
+        text.dest[text.len].w = font->chs[ch].w;
+        text.dest[text.len].h = font->chs[ch].h;
         cx += font->chs[ch].xadv;
 
-        cache.len++;
+        text.len++;
     }
 
-    return cache;
+    return text;
 }
 
-void cache_render (SDL_Renderer* renderer, struct cache *cache) {
+void text_render (SDL_Renderer* renderer, struct text *text) {
     /* render area for debug
-    SDL_Surface *s = SDL_CreateRGBSurface(0, cache->bounds.w, cache->bounds.h, 32, 0, 0, 0, 0);
+    SDL_Surface *s = SDL_CreateRGBSurface(0, text->bounds.w, text->bounds.h, 32, 0, 0, 0, 0);
     SDL_FillRect(s, NULL, SDL_MapRGB(s->format, 255, 0, 0));
     SDL_Texture *tex = SDL_CreateTextureFromSurface(renderer, s);
     SDL_FreeSurface(s);
-    SDL_RenderCopy(renderer, tex, NULL, &cache->bounds);
+    SDL_RenderCopy(renderer, tex, NULL, &text->bounds);
     SDL_DestroyTexture(tex);
     */
 
-    for (int i = 0; i < cache->len; ++i)
-        SDL_RenderCopy(renderer, cache->tex, &cache->src[i], &cache->dest[i]);
+    for (int i = 0; i < text->len; ++i)
+        SDL_RenderCopy(renderer, text->tex, &text->src[i], &text->dest[i]);
 }
 
-void cache_free (struct cache *cache) {
-    if (cache->dest == NULL) return;
+void text_free (struct text *text) {
+    if (text->dest == NULL) return;
 
-    free(cache->dest);
-    free(cache->src);
-    cache->dest = NULL;
-    cache->src = NULL;
+    free(text->dest);
+    free(text->src);
+    text->dest = NULL;
+    text->src = NULL;
 }
 
 void font_free (struct font *font) {
@@ -163,9 +163,9 @@ void font_free (struct font *font) {
     font->tex = NULL;
 }
 
-int cache_click(struct cache *cache, int x, int y) {
-    if ((x > cache->bounds.x) &&  (x < cache->bounds.x + cache->bounds.w)) {
-        if ((y > cache->bounds.y) &&  (y < cache->bounds.y + cache->bounds.h)) {
+int text_click(struct text *text, int x, int y) {
+    if ((x > text->bounds.x) &&  (x < text->bounds.x + text->bounds.w)) {
+        if ((y > text->bounds.y) &&  (y < text->bounds.y + text->bounds.h)) {
             return 1;
         }
     }
