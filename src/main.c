@@ -14,6 +14,7 @@ struct font font, font24;
 struct game_screen menus;
 struct text stat_text;
 struct text title_text;
+SDL_Rect stat_bounds[4] = {{0,0,0,0}};
 
 struct player player = { 10, 95, 8, 75, 63, 55, 4, 30, 21, 50, 98 };
 
@@ -30,7 +31,12 @@ int handle_input () {
 
         if (screen_get(&menus) == game_ui) {
             int rc = clicked(&event, &stat_text.bounds);
-            if (rc) printf("clicked text: %i\n", rc);
+            if (rc) printf("clicked stat_text\n");
+
+            for (int i = 0; i < 4; ++i) {
+                int rc = clicked(&event, &stat_bounds[i]);
+                if (rc) printf("clicked stat: %i\n", i);
+            }
         }
     }
 
@@ -64,6 +70,7 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
         for (int i=0;i<4;++i) {
             sprintf(buf, "%i", stats[i]);
             text = font_build(&font24, alignx, aligny+(text.bounds.h * (i + 1)), buf);
+            stat_bounds[i] = text.bounds;
             if (stats[i] > 85) SDL_SetTextureColorMod(text.tex, 200, 240, 255);
             else if (stats[i] < 20) SDL_SetTextureColorMod(text.tex, 255, 64, 64);
             else SDL_SetTextureColorMod(text.tex, 255, 240, 200);
