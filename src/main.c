@@ -45,8 +45,31 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
         text_render(renderer, &title_text);
     }
     else if (screen_get(&menus) == game_ui) {
-        SDL_SetTextureColorMod(stat_text.tex, 200, 240, 230);
+        SDL_SetTextureColorMod(stat_text.tex, 200, 200, 200);
         text_render(renderer, &stat_text);
+
+        // render stats
+        struct text text;
+        int alignx = stat_text.bounds.w + stat_text.bounds.x + 50;
+        int aligny = stat_text.bounds.y;
+        char buf[256] = {'\0'};
+
+        text = font_build(&font24, alignx, aligny, "Galendra");
+        SDL_SetTextureColorMod(text.tex, 230, 255, 230);
+        text_render(renderer, &text);
+        text_free(&text);
+
+        int stats[4] = { player.strength, player.agility, player.intellect, player.charisma };
+
+        for (int i=0;i<4;++i) {
+            sprintf(buf, "%i", stats[i]);
+            text = font_build(&font24, alignx, aligny+(text.bounds.h * (i + 1)), buf);
+            if (stats[i] > 85) SDL_SetTextureColorMod(text.tex, 200, 240, 255);
+            else if (stats[i] < 20) SDL_SetTextureColorMod(text.tex, 255, 64, 64);
+            else SDL_SetTextureColorMod(text.tex, 255, 240, 200);
+            text_render(renderer, &text);
+            text_free(&text);
+        }
     }
 
     return 0;
@@ -65,11 +88,7 @@ SDL_Renderer* game_init () {
     font24 = font_init(renderer, "assets/fonts/constantia-24");
 
     title_text = font_build(&font, 50, 50, "Talis Darks");
-
-    char stats[256] = {'\0'};
-    sprintf(stats, "player %s\nstr: %i\nagility: %i\nintellect %i\ncharisma %i", 
-        "Galendra", player.strength, player.agility, player.intellect, player.charisma);
-    stat_text = font_build(&font24, 50, 50, stats);
+    stat_text = font_build(&font24, 50, 50, "player\nstrength\nagility\nintellect\ncharisma");
 
     return renderer;
 }
