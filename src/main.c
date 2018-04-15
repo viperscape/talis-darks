@@ -41,9 +41,11 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
     if (handle_input() == 1) return 1;
 
     if (screen_get(&menus) == main_menu_ui) {
+        SDL_SetTextureColorMod(title_text.tex, 255, 205, 0);
         text_render(renderer, &title_text);
     }
     else if (screen_get(&menus) == game_ui) {
+        SDL_SetTextureColorMod(stat_text.tex, 200, 240, 230);
         text_render(renderer, &stat_text);
     }
 
