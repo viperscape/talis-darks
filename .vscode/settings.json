@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.sql": "sql",
-        "*.h": "c",
-        "*.c": "c"
-    }
-}
