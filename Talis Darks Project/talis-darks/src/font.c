@@ -18,36 +18,36 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     //FILE *f = fopen(filename_, "r");
 	SDL_RWops *rw = SDL_RWFromFile(filename_, "rb");
     if (rw == NULL)  {
-        printf("font load error %s\n", filename_);
+        SDL_Log("font load error %s\n", filename_);
         return font;
     }
 
     char line[1024] = {'\0'};
 	char c = '\0';
     int i = 0;
-    int skiplines = 6;
+    int skiplines = 3;
     int count = 0;
 
     while (SDL_RWread(rw, &c, 1, 1) > 0) {
         if (i == 1023) {
-            printf("max characters exceeded\n%s\n", line);
+            SDL_Log("max characters exceeded\n%s\n", line);
             i = 0;
             continue;
         }
 
-        if ((c == '\n') || (c == '\r')) {
+        if (c == '\n') {
             if (skiplines > 0) skiplines--;
             else {
                 int rc = 0;
                 if (count < 1) {
                     rc = sscanf(line, "chars count=%i", &count);
-                    if (rc < 1) printf("font parse error %i %s\n", rc, line);
+                    if (rc < 1) SDL_Log("font parse error %i %s\n", rc, line);
                     else font.count = count;
                 }
-                else if (strlen(line) > 1) {
+                else {
                     int id, x, y, w, h, xo, yo, xa, p, chl = 0;
                     rc = sscanf(line, "char id=%i   x=%i    y=%i     width=%i     height=%i    xoffset=%i     yoffset=%i     xadvance=%i     page=%i  chnl=%i", &id, &x, &y, &w, &h, &xo, &yo, &xa, &p, &chl);
-                    if (rc < 10) printf("font parse error %i %s\n", rc, line);
+                    if (rc < 10) SDL_Log("font parse error %i %s\n", rc, line);
 					else {
 						struct ch ch = { id, x, y, w, h, xo, yo, xa };
 						font.chs[id] = ch;
@@ -57,7 +57,7 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
 
             for (i;i>0;--i) line[i] = '\0';
         }
-        else {
+        else if (c != '\r') {
             line[i] = c;
             i++;
         }
@@ -73,7 +73,7 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     SDL_Surface* surface = NULL;
     surface = SDL_LoadBMP(filename_);
     if (surface == NULL) {
-        printf("Could not create surface: %s\n\t%s\n", filename_, SDL_GetError());
+        SDL_Log("Could not create surface: %s\n\t%s\n", filename_, SDL_GetError());
     }
 
     font.tex = SDL_CreateTextureFromSurface(renderer, surface);
@@ -112,7 +112,7 @@ struct text font_build (struct font *font, int x, int y, char *str) {
         SDL_Rect *src = realloc(text.src, sizeof(SDL_Rect) * (text.len + 1));
         SDL_Rect *dest = realloc(text.dest, sizeof(SDL_Rect) * (text.len + 1));
         if ((src == NULL)||(dest == NULL)) {
-            //printf("exceeded dynamic mem\n");
+            //SDL_Log("exceeded dynamic mem\n");
             exit(1);
         }
 
