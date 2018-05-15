@@ -7,8 +7,8 @@
 #include "gfx.h"
 #include "player.h"
 
-int win_w = 1024;
-int win_h = 768;
+int win_w = 500;
+int win_h = 800;
 SDL_Renderer* render_ctx = NULL;
 struct font font, font24;
 struct game_screen menus;
