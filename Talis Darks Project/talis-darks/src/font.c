@@ -16,22 +16,21 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     struct font font = { 0 , chs, NULL };
 
     //FILE *f = fopen(filename_, "r");
-	SDL_RWops *rw = SDL_RWFromFile(filename_, "r");
+	SDL_RWops *rw = SDL_RWFromFile(filename_, "rb");
     if (rw == NULL)  {
         printf("font load error %s\n", filename_);
         return font;
     }
 
     char line[1024] = {'\0'};
-    char c = '\0';
+	char c = '\0';
     int i = 0;
-    int skiplines = 3;
+    int skiplines = 6;
     int count = 0;
-    //int cursor = 0;
 
-    while (SDL_RWread(rw, c, 1, 1) > 0) {  //(c = fgetc(f)) != EOF) {
+    while (SDL_RWread(rw, &c, 1, 1) > 0) {
         if (i == 1023) {
-            //printf("max characters exceeded\n");
+            printf("max characters exceeded\n%s\n", line);
             i = 0;
             continue;
         }
@@ -42,16 +41,17 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
                 int rc = 0;
                 if (count < 1) {
                     rc = sscanf(line, "chars count=%i", &count);
-                    //if (rc < 1) printf("font parse error %s\n", line);
-                    font.count = count;
+                    if (rc < 1) printf("font parse error %i %s\n", rc, line);
+                    else font.count = count;
                 }
-                else {
+                else if (strlen(line) > 1) {
                     int id, x, y, w, h, xo, yo, xa, p, chl = 0;
                     rc = sscanf(line, "char id=%i   x=%i    y=%i     width=%i     height=%i    xoffset=%i     yoffset=%i     xadvance=%i     page=%i  chnl=%i", &id, &x, &y, &w, &h, &xo, &yo, &xa, &p, &chl);
-                    //if (rc < 10) printf("font parse error %s\n", line);
-                    struct ch ch = {id, x, y, w, h, xo, yo, xa};
-                    font.chs[id] = ch;
-                    //cursor++;
+                    if (rc < 10) printf("font parse error %i %s\n", rc, line);
+					else {
+						struct ch ch = { id, x, y, w, h, xo, yo, xa };
+						font.chs[id] = ch;
+					}
                 }
             }
 
@@ -64,7 +64,6 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     }
 
 	SDL_RWclose(rw);
-    //fclose(f);
 
     // load texture
     i = 0;
@@ -74,7 +73,7 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
     SDL_Surface* surface = NULL;
     surface = SDL_LoadBMP(filename_);
     if (surface == NULL) {
-        //printf("Could not create surface: %s\n\t%s\n", filename_, SDL_GetError());
+        printf("Could not create surface: %s\n\t%s\n", filename_, SDL_GetError());
     }
 
     font.tex = SDL_CreateTextureFromSurface(renderer, surface);
