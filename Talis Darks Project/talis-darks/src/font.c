@@ -177,11 +177,11 @@ int text_click(struct text *text, int x, int y) {
 }
 
 /// render text on the fly, returns next pixels
-SDL_Point text_draw(SDL_Renderer* renderer, struct font *font, int x, int y, char *str, Uint8 r, Uint8 g, Uint8 b) {
+SDL_Rect text_draw(SDL_Renderer* renderer, struct font *font, int x, int y, char *str, Uint8 r, Uint8 g, Uint8 b) {
     struct text text = font_build(font, x, y, str);
-    SDL_Point p = { text.bounds.w, text.bounds.h };
+    SDL_Rect bounds = text.bounds;
     SDL_SetTextureColorMod(text.tex, r, g, b);
     text_render(renderer, &text);
     text_free(&text);
-    return p;
+    return bounds;
 }

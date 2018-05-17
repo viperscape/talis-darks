@@ -68,21 +68,21 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
         int aligny = stat_text.bounds.y;
         char buf[256] = {'\0'};
 
-        SDL_Point text_pos = text_draw(renderer, &font24, alignx, aligny, "Galendra", 230, 255, 230);
+        SDL_Rect text_bounds = text_draw(renderer, &font24, alignx, aligny, "Galendra", 230, 255, 230);
 
         int stats[4] = { player.strength, player.agility, player.intellect, player.charisma };
 
 		int i = 0;
+        Uint8 r = 0, g = 0, b = 0;
         for (i;i<4;++i) {
             sprintf(buf, "%i", stats[i]);
-            int next_y = aligny + (text_pos.y * (i + 1));
-            struct text text = font_build(&font24, alignx, next_y, buf);
-            stat_bounds[i] = text.bounds;
-            if (stats[i] > 85) SDL_SetTextureColorMod(text.tex, 200, 240, 255);
-            else if (stats[i] < 20) SDL_SetTextureColorMod(text.tex, 255, 64, 64);
-            else SDL_SetTextureColorMod(text.tex, 255, 240, 200);
-            text_render(renderer, &text);
-            text_free(&text);
+            int next_y = aligny + (text_bounds.h * (i + 1));
+            
+            if (stats[i] > 85) r = 200, g = 240, b = 255;
+            else if (stats[i] < 20) r = 255, g = 64, b = 64;
+            else r = 255, g = 240, b = 200;
+
+            stat_bounds[i] = text_draw(renderer, &font24, alignx, next_y, buf, r, g, b);
         }
     }
 

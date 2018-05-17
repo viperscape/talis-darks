@@ -30,6 +30,6 @@ extern struct text font_build (struct font *font, int x, int y, char *str);
 extern void text_render (SDL_Renderer* renderer, struct text *text);
 extern void text_free (struct text *text);
 extern void font_free (struct font *font);
-extern SDL_Point text_draw(SDL_Renderer* renderer, struct font *font, int x, int y, char *str, Uint8 r, Uint8 g, Uint8 b);
+extern SDL_Rect text_draw(SDL_Renderer* renderer, struct font *font, int x, int y, char *str, Uint8 r, Uint8 g, Uint8 b);
 
 #endif
