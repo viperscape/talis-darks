@@ -10,7 +10,7 @@
 int win_w = 500;
 int win_h = 800;
 SDL_Renderer* render_ctx = NULL;
-struct font font, font24;
+struct font font, font36;
 struct game_screen menus;
 struct text mainmenu_text;
 struct text stat_text;
@@ -68,7 +68,7 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
         int aligny = stat_text.bounds.y;
         char buf[256] = {'\0'};
 
-        SDL_Rect text_bounds = text_draw(renderer, &font24, alignx, aligny, "Galendra", 230, 255, 230);
+        SDL_Rect text_bounds = text_draw(renderer, &font36, alignx, aligny, "Galendra", 230, 255, 230);
 
         int stats[4] = { player.strength, player.agility, player.intellect, player.charisma };
 
@@ -82,7 +82,7 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
             else if (stats[i] < 20) r = 255, g = 64, b = 64;
             else r = 255, g = 240, b = 200;
 
-            stat_bounds[i] = text_draw(renderer, &font24, alignx, next_y, buf, r, g, b);
+            stat_bounds[i] = text_draw(renderer, &font36, alignx, next_y, buf, r, g, b);
         }
     }
 
@@ -99,11 +99,11 @@ void game_free() {
 SDL_Renderer* game_init () {
     SDL_Renderer* renderer = gfx_init("Talis Darks", 200, 200, win_w,win_h);
     font = font_init(renderer, "fonts/constantia");
-    font24 = font_init(renderer, "fonts/constantia-24");
+    font36 = font_init(renderer, "fonts/constantia-36");
 
-    mainmenu_text = font_build(&font24, 5, 5, "Options");
+    mainmenu_text = font_build(&font36, 5, 5, "Options");
     title_text = font_build(&font, 50, 50, "Talis Darks");
-    stat_text = font_build(&font24, 50, 50, "player\nstrength\nagility\nintellect\ncharisma");
+    stat_text = font_build(&font36, 50, 50, "player\nstrength\nagility\nintellect\ncharisma");
 
     return renderer;
 }
