@@ -1,0 +1,1 @@
+magick $1.psd -alpha on -compress none -background none -flatten $1.bmp

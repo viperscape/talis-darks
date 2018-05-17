@@ -6,6 +6,7 @@
 #include "font.h"
 #include "gfx.h"
 #include "player.h"
+#include "sprite.h"
 
 int win_w = 500;
 int win_h = 800;
@@ -84,6 +85,12 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
 
             stat_bounds[i] = text_draw(renderer, &font36, alignx, next_y, buf, r, g, b);
         }
+
+        struct sprite s = sprite_load(renderer, "art/shield-ico", heading_None);
+        s.rect.x = 5;
+        s.rect.y = 500;
+        sprite_render(renderer, &s);
+        sprite_free(&s);
     }
 
     return 0;

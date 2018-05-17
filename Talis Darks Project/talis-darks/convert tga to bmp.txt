@@ -1,1 +1,0 @@
-magick constantia-36_0.tga -alpha on -compress none constantia-36.bmp
