@@ -7,7 +7,7 @@ SDL_Texture* texture = NULL;
 
 SDL_Window* gfx_get_window() { return window; }
 
-SDL_Renderer* gfx_init(char *title, int x, int y, int w, int h) {
+SDL_Renderer* gfx_init(char *title, int w, int h) {
     SDL_Init(SDL_INIT_VIDEO);
 
     window = SDL_CreateWindow(title, 
@@ -15,13 +15,13 @@ SDL_Renderer* gfx_init(char *title, int x, int y, int w, int h) {
         w, h, SDL_WINDOW_OPENGL);
 
     if (window==NULL) {   
-        //printf("Could not create window: %s\n", SDL_GetError());
+        SDL_Log("Could not create window: %s\n", SDL_GetError());
         return NULL;
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer==NULL) {   
-        //printf("Could not create renderer: %s\n", SDL_GetError());
+        SDL_Log("Could not create renderer: %s\n", SDL_GetError());
         return NULL;
     }
 

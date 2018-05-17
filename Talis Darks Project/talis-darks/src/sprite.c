@@ -35,7 +35,6 @@ struct sprite sprite_load (SDL_Renderer* renderer, char* filename, enum sprite_h
 
     char* ext = ".bmp";
     char filename_[256] = {'\0'};
-    //printf("loading sprite %s\n", filename);
 
     SDL_Surface* surface = NULL;
     int i = 0;
@@ -56,14 +55,14 @@ struct sprite sprite_load (SDL_Renderer* renderer, char* filename, enum sprite_h
 
         surface = SDL_LoadBMP(filename_);
         if (surface == NULL) {
-            //printf("Could not create surface: %s\n", SDL_GetError());
+            SDL_Log("Could not create surface: %s %s\n", filename_, SDL_GetError());
             return s;
         }
         
         Uint32 key = SDL_MapRGB(surface->format, 255, 0, 255);
         int r = SDL_SetColorKey(surface, SDL_TRUE, key);
         if (r > 0) {
-            //printf("Could not key surface: %s\n", SDL_GetError());
+            SDL_Log("Could not key surface: %s %s\n", filename_, SDL_GetError());
             return s;
         }
 
