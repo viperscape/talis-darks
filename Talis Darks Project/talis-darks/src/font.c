@@ -15,7 +15,6 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
 
     struct font font = { 0 , chs, NULL };
 
-    //FILE *f = fopen(filename_, "r");
 	SDL_RWops *rw = SDL_RWFromFile(filename_, "rb");
     if (rw == NULL)  {
         SDL_Log("font load error %s\n", filename_);
@@ -112,7 +111,7 @@ struct text font_build (struct font *font, int x, int y, char *str) {
         SDL_Rect *src = realloc(text.src, sizeof(SDL_Rect) * (text.len + 1));
         SDL_Rect *dest = realloc(text.dest, sizeof(SDL_Rect) * (text.len + 1));
         if ((src == NULL)||(dest == NULL)) {
-            //SDL_Log("exceeded dynamic mem\n");
+            SDL_Log("exceeded dynamic mem\n");
             exit(1);
         }
 

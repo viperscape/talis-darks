@@ -93,6 +93,7 @@ void game_free() {
     gfx_free();
     text_free(&stat_text);
     text_free(&title_text);
+    text_free(&mainmenu_text);
     font_free(&font48);
     font_free(&font36);
 }
