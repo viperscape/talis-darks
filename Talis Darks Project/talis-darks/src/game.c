@@ -10,7 +10,7 @@
 int win_w = 500;
 int win_h = 800;
 SDL_Renderer* render_ctx = NULL;
-struct font font, font36;
+struct font font48, font36;
 struct game_screen menus;
 struct text mainmenu_text;
 struct text stat_text;
@@ -93,16 +93,17 @@ void game_free() {
     gfx_free();
     text_free(&stat_text);
     text_free(&title_text);
-    font_free(&font);
+    font_free(&font48);
+    font_free(&font36);
 }
 
 SDL_Renderer* game_init () {
     SDL_Renderer* renderer = gfx_init("Talis Darks", 200, 200, win_w,win_h);
-    font = font_init(renderer, "fonts/constantia");
+    font48 = font_init(renderer, "fonts/constantia-48");
     font36 = font_init(renderer, "fonts/constantia-36");
 
     mainmenu_text = font_build(&font36, 5, 5, "Options");
-    title_text = font_build(&font, 50, 50, "Talis Darks");
+    title_text = font_build(&font48, 50, 50, "Talis Darks");
     stat_text = font_build(&font36, 50, 50, "player\nstrength\nagility\nintellect\ncharisma");
 
     return renderer;
