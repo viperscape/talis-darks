@@ -12,6 +12,7 @@ int win_h = 800;
 SDL_Renderer* render_ctx = NULL;
 struct font font, font24;
 struct game_screen menus;
+struct text mainmenu_text;
 struct text stat_text;
 struct text title_text;
 SDL_Rect stat_bounds[4] = {{0,0,0,0}};
@@ -30,6 +31,8 @@ int handle_input () {
         }
 
         if (screen_get(&menus) == game_ui) {
+            if (clicked(&event, &mainmenu_text.bounds)) screen_toggle(&menus, main_menu_ui);
+
             int rc = clicked(&event, &stat_text.bounds);
             //if (rc) printf("clicked stat_text\n");
 			int i = 0;
@@ -37,6 +40,9 @@ int handle_input () {
                 int rc = clicked(&event, &stat_bounds[i]);
                 //if (rc) printf("clicked stat: %i\n", i);
             }
+        }
+        else if (screen_get(&menus) == main_menu_ui) {
+            if (clicked(&event, &title_text.bounds)) screen_toggle(&menus, main_menu_ui);
         }
     }
 
@@ -51,6 +57,9 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
         text_render(renderer, &title_text);
     }
     else if (screen_get(&menus) == game_ui) {
+        SDL_SetTextureColorMod(mainmenu_text.tex, 255, 205, 0);
+        text_render(renderer, &mainmenu_text);
+
         SDL_SetTextureColorMod(stat_text.tex, 200, 200, 200);
         text_render(renderer, &stat_text);
 
@@ -95,6 +104,7 @@ SDL_Renderer* game_init () {
     font = font_init(renderer, "fonts/constantia");
     font24 = font_init(renderer, "fonts/constantia-24");
 
+    mainmenu_text = font_build(&font24, 5, 5, "Options");
     title_text = font_build(&font, 50, 50, "Talis Darks");
     stat_text = font_build(&font24, 50, 50, "player\nstrength\nagility\nintellect\ncharisma");
 
