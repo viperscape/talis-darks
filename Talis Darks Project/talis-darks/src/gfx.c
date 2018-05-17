@@ -12,7 +12,7 @@ SDL_Renderer* gfx_init(char *title, int x, int y, int w, int h) {
 
     window = SDL_CreateWindow(title, 
         SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 
-        w, h, SDL_WINDOW_FULLSCREEN);
+        w, h, SDL_WINDOW_OPENGL);
 
     if (window==NULL) {   
         //printf("Could not create window: %s\n", SDL_GetError());
