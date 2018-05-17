@@ -128,6 +128,15 @@
     <ClCompile Include="..\..\..\talis-darks\src\ui.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\talis-darks\src\font.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\game.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\gfx.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\player.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\sprite.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\support.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\ui.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
