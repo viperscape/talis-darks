@@ -112,7 +112,7 @@ void game_free() {
 SDL_Renderer* game_init () {
     SDL_Renderer* renderer = gfx_init("Talis Darks", win_w, win_h);
     font48 = font_init(renderer, "fonts/constantia-48");
-    font36 = font_init(renderer, "fonts/constantia-36");
+    font36 = font_init(renderer, "fonts/lucida-sans-36");
 
     mainmenu_text = font_build(&font36, 5, 5, "Options");
     title_text = font_build(&font48, 50, 50, "Talis Darks");
