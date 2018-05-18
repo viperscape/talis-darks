@@ -9,5 +9,20 @@
     <ClCompile Include="..\..\talis-darks\src\player.c" />
     <ClCompile Include="..\..\talis-darks\src\sprite.c" />
     <ClCompile Include="..\..\talis-darks\src\ui.c" />
+    <ClCompile Include="..\..\talis-darks\src\sql.c" />
+    <ClCompile Include="..\..\talis-darks\src\sqlite3\shell.c">
+      <Filter>sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\talis-darks\src\sqlite3\sqlite3.c">
+      <Filter>sqlite3</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\talis-darks\src\sql.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="sqlite3">
+      <UniqueIdentifier>{b33a7cf8-8590-4545-93fb-eb4bac68da79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
