@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\sqlite3">
+      <UniqueIdentifier>{7ad26332-3fb5-4b17-8847-dffa98fba7a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\talis-darks\src\game.c">
@@ -35,6 +38,15 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\talis-darks\src\sql.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\talis-darks\src\sqlite3\shell.c">
+      <Filter>Source Files\sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\talis-darks\src\sqlite3\sqlite3.c">
+      <Filter>Source Files\sqlite3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,5 +71,13 @@
     <ClInclude Include="..\..\..\talis-darks\src\ui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\talis-darks\src\sql.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\talis-darks\db.sql">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

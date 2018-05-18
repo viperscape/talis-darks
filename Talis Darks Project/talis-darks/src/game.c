@@ -7,6 +7,7 @@
 #include "gfx.h"
 #include "player.h"
 #include "sprite.h"
+#include "sql.h"
 
 int win_w = 600;
 int win_h = 900;
@@ -18,6 +19,7 @@ struct text stat_text;
 struct text title_text;
 SDL_Rect stat_bounds[4] = {{0,0,0,0}};
 struct sprite sat_map;
+void* db = NULL;
 
 struct player player = { 10, 95, 8, 75, 63, 55, 4, 30, 21, 50, 98 };
 
@@ -107,9 +109,13 @@ void game_free() {
     font_free(&font48);
     font_free(&font36);
     sprite_free(&sat_map);
+    sql_close(db);
 }
 
 SDL_Renderer* game_init () {
+    db = sql_init("game.db", "db.sql");
+    if (!db) return NULL;
+
     SDL_Renderer* renderer = gfx_init("Talis Darks", win_w, win_h);
     font48 = font_init(renderer, "fonts/constantia-48");
     font36 = font_init(renderer, "fonts/lucida-sans-36");
@@ -127,6 +133,7 @@ void game_start() {
     menus = screen_init(game_ui);
 
     render_ctx = game_init();
+    if (!render_ctx) return;
 
     // render loop
     gfx_render(&render_cycle);

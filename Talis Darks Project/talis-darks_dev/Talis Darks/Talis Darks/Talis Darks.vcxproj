@@ -125,6 +125,9 @@
     <ClCompile Include="..\..\..\talis-darks\src\gfx.c" />
     <ClCompile Include="..\..\..\talis-darks\src\player.c" />
     <ClCompile Include="..\..\..\talis-darks\src\sprite.c" />
+    <ClCompile Include="..\..\..\talis-darks\src\sql.c" />
+    <ClCompile Include="..\..\..\talis-darks\src\sqlite3\shell.c" />
+    <ClCompile Include="..\..\..\talis-darks\src\sqlite3\sqlite3.c" />
     <ClCompile Include="..\..\..\talis-darks\src\ui.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -134,8 +137,12 @@
     <ClInclude Include="..\..\..\talis-darks\src\gfx.h" />
     <ClInclude Include="..\..\..\talis-darks\src\player.h" />
     <ClInclude Include="..\..\..\talis-darks\src\sprite.h" />
+    <ClInclude Include="..\..\..\talis-darks\src\sql.h" />
     <ClInclude Include="..\..\..\talis-darks\src\support.h" />
     <ClInclude Include="..\..\..\talis-darks\src\ui.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\talis-darks\db.sql" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
