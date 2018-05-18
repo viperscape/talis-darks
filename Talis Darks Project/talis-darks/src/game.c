@@ -8,8 +8,8 @@
 #include "player.h"
 #include "sprite.h"
 
-int win_w = 500;
-int win_h = 800;
+int win_w = 600;
+int win_h = 900;
 SDL_Renderer* render_ctx = NULL;
 struct font font48, font36;
 struct game_screen menus;
