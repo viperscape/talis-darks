@@ -75,6 +75,7 @@ struct font font_init (SDL_Renderer* renderer, char *filename) {
         SDL_Log("Could not create surface: %s\n\t%s\n", filename_, SDL_GetError());
     }
 
+    SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0, 0, 0));
     font.tex = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_FreeSurface(surface);
     surface = NULL;
