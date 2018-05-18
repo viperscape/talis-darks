@@ -2,6 +2,7 @@
 
 #include "support.h"
 #include <stdio.h>
+#include <string.h>
 #include "ui.h"
 #include "font.h"
 #include "gfx.h"
@@ -113,7 +114,15 @@ void game_free() {
 }
 
 SDL_Renderer* game_init () {
-    db = sql_init("game.db", "db.sql");
+    char path[1024] = { '\0' };
+
+    #ifdef __ANDROID_API__
+    strcat(path, SDL_AndroidGetExternalStoragePath());
+    strcat(path, "/");
+    #endif
+
+    strcat(path, "game.db");
+    db = sql_init(&path, "db.sql");
     if (!db) return NULL;
 
     SDL_Renderer* renderer = gfx_init("Talis Darks", win_w, win_h);
