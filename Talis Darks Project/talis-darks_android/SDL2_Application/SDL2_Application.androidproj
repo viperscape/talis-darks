@@ -145,14 +145,36 @@
     </AntPackage>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Content Include="assets\fonts\consolas.bmp" />
-    <Content Include="assets\fonts\consolas.fnt" />
-    <Content Include="assets\fonts\constantia-24.bmp" />
-    <Content Include="assets\fonts\constantia-24.fnt" />
-    <Content Include="assets\fonts\constantia-36.bmp" />
-    <Content Include="assets\fonts\constantia-36.fnt" />
-    <Content Include="assets\fonts\constantia.bmp" />
-    <Content Include="assets\fonts\constantia.fnt" />
+    <Content Include="..\..\talis-darks\art\brown-sat-map.bmp">
+      <Link>assets\art\brown-sat-map.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\art\shield-ico.bmp">
+      <Link>assets\art\shield-ico.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\consolas-32.bmp">
+      <Link>assets\fonts\consolas-32.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\consolas-32.fnt">
+      <Link>assets\fonts\consolas-32.fnt</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\constantia-24.bmp">
+      <Link>assets\fonts\constantia-24.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\constantia-24.fnt">
+      <Link>assets\fonts\constantia-24.fnt</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\constantia-36.bmp">
+      <Link>assets\fonts\constantia-36.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\constantia-36.fnt">
+      <Link>assets\fonts\constantia-36.fnt</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\constantia-48.bmp">
+      <Link>assets\fonts\constantia-48.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\constantia-48.fnt">
+      <Link>assets\fonts\constantia-48.fnt</Link>
+    </Content>
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />
     <AndroidManifest Include="AndroidManifest.xml" />
@@ -163,6 +185,10 @@
   <ItemGroup>
     <ProjectReference Include="..\main\main.vcxproj" />
     <ProjectReference Include="..\SDL2\SDL2.vcxproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\fonts\" />
+    <Folder Include="assets\art\" />
   </ItemGroup>
   <Import Project="$(AndroidTargetsPath)\Android.targets" />
   <ImportGroup Label="ExtensionTargets" />
