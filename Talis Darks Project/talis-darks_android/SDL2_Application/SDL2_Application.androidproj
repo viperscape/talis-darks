@@ -151,6 +151,9 @@
     <Content Include="..\..\talis-darks\art\shield-ico.bmp">
       <Link>assets\art\shield-ico.bmp</Link>
     </Content>
+    <Content Include="..\..\talis-darks\db.sql">
+      <Link>assets\db.sql</Link>
+    </Content>
     <Content Include="..\..\talis-darks\fonts\consolas-32.bmp">
       <Link>assets\fonts\consolas-32.bmp</Link>
     </Content>
@@ -174,6 +177,18 @@
     </Content>
     <Content Include="..\..\talis-darks\fonts\constantia-48.fnt">
       <Link>assets\fonts\constantia-48.fnt</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\lucida-36.bmp">
+      <Link>assets\fonts\lucida-36.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\lucida-36.fnt">
+      <Link>assets\fonts\lucida-36.fnt</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\lucida-sans-36.bmp">
+      <Link>assets\fonts\lucida-sans-36.bmp</Link>
+    </Content>
+    <Content Include="..\..\talis-darks\fonts\lucida-sans-36.fnt">
+      <Link>assets\fonts\lucida-sans-36.fnt</Link>
     </Content>
     <Content Include="res\values\strings.xml" />
     <AntBuildXml Include="build.xml" />
