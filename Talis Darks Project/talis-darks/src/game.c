@@ -17,6 +17,7 @@ struct text mainmenu_text;
 struct text stat_text;
 struct text title_text;
 SDL_Rect stat_bounds[4] = {{0,0,0,0}};
+struct sprite sat_map;
 
 struct player player = { 10, 95, 8, 75, 63, 55, 4, 30, 21, 50, 98 };
 
@@ -58,6 +59,8 @@ int render_cycle (SDL_Renderer* renderer, float delta) {
         text_render(renderer, &title_text);
     }
     else if (screen_get(&menus) == game_ui) {
+        sprite_render(renderer, &sat_map);
+
         SDL_SetTextureColorMod(mainmenu_text.tex, 255, 205, 0);
         text_render(renderer, &mainmenu_text);
 
@@ -103,6 +106,7 @@ void game_free() {
     text_free(&mainmenu_text);
     font_free(&font48);
     font_free(&font36);
+    sprite_free(&sat_map);
 }
 
 SDL_Renderer* game_init () {
@@ -113,6 +117,8 @@ SDL_Renderer* game_init () {
     mainmenu_text = font_build(&font36, 5, 5, "Options");
     title_text = font_build(&font48, 50, 50, "Talis Darks");
     stat_text = font_build(&font36, 50, 50, "player\nstrength\nagility\nintellect\ncharisma");
+
+    sat_map = sprite_load(renderer, "art/brown-sat-map", heading_None);
 
     return renderer;
 }
